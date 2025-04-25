@@ -1,0 +1,17 @@
+To start server enter this in Power shell and hit enter :
+
+    start-job -scriptblock{cloudflared tunnel --url localhost:5000 *> "logs\out.txt"}
+    start-sleep -seconds 10
+    start-job -scriptblock{python app.py}
+    start-sleep -seconds 10
+    start-job -scriptblock{python QRGenerate.py}
+    start-sleep -seconds 5
+    start-job -scriptblock{"see qrcode folder"} 
+    Start-Sleep -Seconds 1800
+    Get-Job | Stop-Job; Get-Job | Remove-Job; exit
+
+Before exiting the project enter this and hit enter :
+
+    Get-Job | Stop-Job; Get-Job | Remove-Job; exit
+
+
