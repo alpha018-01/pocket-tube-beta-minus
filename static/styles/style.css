@@ -1,0 +1,445 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  /* Ensures consistent sizing */
+}
+
+hr {
+  border: none;
+  border-top: 3px solid red;
+  margin: 20px 0;
+}
+
+video {
+  border-radius: 10px; /* Adds rounded corners */
+  overflow: hidden; /* Ensures the content respects the border radius */
+}
+
+/* HTML and Body Styles */
+html,
+body {
+  min-width: 320px;
+  min-height: 479px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+
+  /* Prevent horizontal scrolling */
+}
+
+/* Navigation Bar */
+#nav {
+  height: 70px;
+  /* Adjust height to give enough space */
+  width: 100%;
+  padding: 20px;
+  background-color: #0b0b0b;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  /* Spaces items evenly across the nav bar */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  font-family: "Nunito Sans", sans-serif;
+  /* Keeps the navigation bar above everything else */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  vertical-align: baseline;
+  /* Adds a subtle shadow */
+}
+
+#youTube {
+  width: 100px;
+  pointer-events: none;
+  height: auto;
+}
+
+#nav > p {
+  font-size: 15px;
+  color: whitesmoke;
+  cursor: pointer;
+  font-family: "Nunito Sans", sans-serif;
+  margin: 0;
+  /* Ensure consistent alignment */
+}
+
+#curr {
+  text-decoration: underline;
+  text-decoration-color: red;
+  text-underline-offset: 4px;
+  font-size: 15px;
+  font-family: "Nunito Sans", sans-serif;
+  color: whitesmoke;
+}
+
+#nav > p:hover {
+  color: red;
+}
+/* Grey Box Container */
+#body {
+  height: auto;
+  width: 90vw;
+  max-width: 600px;
+  background: radial-gradient(circle at 90% 10%, #acababee, #d6d6d6e4);
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 80px auto;
+  font-family: "Nunito Sans", sans-serif;
+  align-items: center;
+  justify-content: center;
+  /* Keeps the box centered */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow */
+}
+
+/* Input Field */
+#url {
+  font-size: 20px;
+  width: 90%;
+  /* Full width for responsiveness */
+  max-width: 500px;
+  /* Prevents the input from being too large */
+  padding: 10px;
+  outline: none;
+  text-align: center;
+  border: 0px;
+  border-radius: 10px;
+  font-family: "Nunito Sans", sans-serif;
+  margin-bottom: 20px;
+}
+
+#url:focus {
+  border: 1px solid black;
+}
+
+/* Button Container */
+#btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nunito Sans", sans-serif;
+  width: 100%;
+  gap: 15px;
+}
+
+#videoContainer {
+  display: none;
+  /* Enable Flexbox for layout */
+  flex-direction: column;
+  /* Stack elements vertically */
+  justify-content: center;
+  /* Center elements vertically */
+  align-items: center;
+  /* Center elements horizontally */
+  margin-bottom: 80px;
+  margin-top: 20px;
+
+  height: auto;
+  width: 90vw;
+  max-width: 600px;
+  background: radial-gradient(circle at 90% 10%, #acababee, #d6d6d6e4);
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 20px;
+  /* margin: 80px auto; */
+  font-family: "Nunito Sans", sans-serif;
+  align-items: center;
+
+  justify-content: center;
+  /* Keeps the box centered */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow */
+}
+
+#videoContainer > h2 {
+  font-family: "Nunito Sans", sans-serif;
+  text-align: left;
+  color: #0b0b0b;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* Buttons */
+#fire {
+  font-size: 12px;
+  background-color: black;
+  padding: 10px 20px;
+  filter: none;
+  border-radius: 10px;
+  font-family: "Nunito Sans", sans-serif;
+  border: none;
+  color: whitesmoke;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+#fire > img {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  user-select: none;
+  /* Prevents dragging */
+}
+
+#fire:focus,
+#fire:active {
+  outline: none;
+  /* Remove focus outline */
+  filter: none;
+  /* Remove any applied filters */
+  background-color: #343434;
+  /* Ensure no background overlay */
+}
+
+/* Footer */
+#foot {
+  height: auto;
+  width: 100%;
+  padding: 5px;
+  background-color: rgb(11, 11, 11);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  font-family: "Nunito Sans", sans-serif;
+  align-items: center;
+  justify-content: center;
+}
+
+#foot > p {
+  font-size: 15px;
+  color: whitesmoke;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#foot > span {
+  color: rgb(217, 35, 35);
+  /* Ensures the ♥ is red */
+  font-size: 18px;
+}
+
+/* Responsive Design for Smaller Screens */
+@media screen and (max-width: 600px) {
+  #btn {
+    flex-direction: column;
+    /* Stacks buttons vertically */
+    gap: 10px;
+    /* Adds spacing between buttons */
+  }
+
+  #body {
+    width: 95vw;
+    /* Slightly reduce width on smaller screens */
+  }
+
+  #videoContainer {
+    width: 95vw;
+    /* Slightly reduce width on smaller screens */
+  }
+
+  #url {
+    width: 95%;
+    /* Adjust input field width */
+  }
+}
+
+.card > p {
+  font-size: 16px;
+  color: #0b0b0b;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: left;
+}
+
+.card > h1 {
+  font-size: 30px;
+  color: #0b0b0b;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.card > ul {
+  font-size: 16px;
+  color: #0b0b0b;
+  font-family: "Nunito Sans", sans-serif;
+  text-align: left;
+}
+
+.card > p > span {
+  font-family: "Tangerine", cursive;
+  font-weight: 1000;
+  font-style: normal;
+}
+
+hr {
+  height: 2px;
+  background-color: #bf0000;
+  margin: 20px 0;
+}
+
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  padding-top: 50px;
+  padding-left: 20px;
+  z-index: 1;
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+    circle at 90% 10%,
+    #acabab,
+    rgb(43, 43, 43)
+  );
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  color: #eeeeee;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  z-index: 9999999;
+}
+
+#loading-screen > img {
+  width: 80px;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+#fact-container {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+#loading {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+#loading > h1 {
+  text-align: center;
+}
+
+#gpd {
+  font-weight: 600;
+  color: #eeeeee;
+  text-shadow: 0 0 5px rgba(230, 248, 248, 0.9),
+    0 0 10px rgba(230, 248, 248, 0.8), 0 0 15px rgba(230, 248, 248, 0.7),
+    0 0 20px rgba(230, 248, 248, 0.6), 0 0 25px rgba(230, 248, 248, 0.5);
+}
+
+#saveBtn , #logOut
+{
+  background-color: #eeeeeee3;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
+  color: #0b0b0b;
+  outline: none;
+  border: 0px;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: bold;
+}
+
+label{
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#settings {
+  width: 15px;
+  height: 15px;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+#nameInput
+{
+  background-color: #acabab22;
+  border-radius: 10px;
+  text-align: left;
+  padding: 5px;
+  width: 100px ;
+  box-sizing: border-box;
+  color: #eeeeee;
+  outline: none;
+  border: 0px;
+  font-size: 20px;
+  font-family: "Tangerine", cursive;
+  font-weight: 1000;
+  font-style: normal;
+}
+
+.dropdown {
+  display: none; /* Hidden by default */
+  position: absolute;
+  color: #eeeeee;
+  width: 100vw;
+  height: auto;
+  padding-top: 20px;
+  top: 60px; /* Position below the image */
+  background-color: #0b0b0b;
+  flex-direction: column;
+  border: 0px ;
+  padding: 10px;
+  align-items: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  justify-content: space-evenly;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}

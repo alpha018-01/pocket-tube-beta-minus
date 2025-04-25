@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/style.css') }}"
+    />
+
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/youtube6.svg') }}"
+    />
+
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 , user-scalabe=0 maximum-scale=1.0"
+    />
+    <title>PocketTube</title>
+  </head>
+  <body>
+    <div id="nav">
+      <img
+        src="static\images\youtube7.svg"
+        alt="youtube"
+        draggable="false"
+        id="youTube"
+      />
+      <p id="curr">Home</p>
+      <p onclick="aboutUs()">About us</p>
+      <img
+        src="static\images\gear.svg"
+        alt="user"
+        draggable="false"
+        id="settings"
+        onclick="dropSettings()"
+      />
+    </div>
+
+    <div class="dropdown" id="dropdownContent">
+      <svg height="5" width="100%" style="margin: 20px 0">
+        <line
+          x1="0"
+          y1="0"
+          x2="100%"
+          y2="0"
+          stroke="#7d7c7c"
+          stroke-width="3"
+        />
+      </svg>
+
+      <div>
+        <span
+          ><label for="nameInput"> Your name : </label>
+          <input
+            type="search"
+            id="nameInput"
+            placeholder="Enter your name"
+            maxlength="10"
+            autocomplete="off"
+            onchange="resetname()"
+          />
+        </span>
+        &nbsp;&nbsp;
+        <button id="saveBtn" onclick="log()">save</button>
+      </div>
+
+      <svg height="5" width="100%" style="margin: 20px 0">
+        <line
+          x1="0"
+          y1="0"
+          x2="100%"
+          y2="0"
+          stroke="#7d7c7c"
+          stroke-width="3"
+        />
+      </svg>
+
+      <div>
+        <button id="logOut" onclick="logOut()">log out</button>
+      </div>
+    </div>
+
+    <div id="loading-screen">
+      <img src="static\video\waitnig.svg" alt="Icon" draggable="false" />
+      <div id="loading">
+        <h1>Loading Page</h1>
+      </div>
+      <div id="fact-container"></div>
+    </div>
+
+    <video class="video-background" autoplay loop muted>
+      <source
+        src="static\video\staticBackground1.mp4"
+        type="video/mp4"
+        playsinline
+      />
+    </video>
+
+    <center id="vercenter">
+      <div id="body" style="margin-bottom: 0px">
+        <input
+          type="search"
+          name="url"
+          id="url"
+          autocomplete="off"
+          placeholder="Enter URL Here..."
+        />
+
+        <br /><br />
+
+        <div id="btn">
+          <span id="fire" onclick="getVideo()">
+            <img src="static\images\video.svg" alt="Icon" draggable="false" />
+            &nbsp; Get MP4
+          </span>
+
+          <span id="fire" onclick="getAudio()">
+            <img src="static\images\audio2.svg" alt="Icon" draggable="false" />
+            &nbsp; Get MP3
+          </span>
+        </div>
+      </div>
+
+      <div id="videoContainer">
+        <h2>Your Request :</h2>
+      </div>
+    </center>
+
+    <div id="foot">
+      <p>Engineered With</p>
+      <span>&hearts;</span>
+      <br />
+      <p>At <span id="gpd">GP Dhanbad</span></p>
+    </div>
+
+    <script>
+      const facts = [
+        "A.P.J. Abdul Kalam revolutionized India’s missile and space programs, earning him the nickname 'Missile Man of India'.",
+        "Dr. Vikram Sarabhai, known as the father of the Indian space program, was instrumental in founding ISRO.",
+        "Homi J. Bhabha established India's nuclear research program, laying the foundation for its nuclear energy sector.",
+        "Satish Dhawan pioneered modern rocket design in India and helped develop launch vehicles like the SLV and PSLV.",
+        "N.R. Narayana Murthy co-founded Infosys, transforming India's software services industry on the global stage.",
+        "Azim Premji transformed Wipro from a small company into a global IT powerhouse by emphasizing innovation.",
+        "Nandan Nilekani spearheaded the development of Aadhaar, the world's largest biometric identification system.",
+        "Dr. Tessy Thomas, often called the 'Missile Woman of India', led critical missile development projects.",
+        "Dr. Raghunath Mashelkar introduced modern biotechnology research in India with lasting public health benefits.",
+        "Dr. C.N.R. Rao’s groundbreaking work in solid-state and materials chemistry has influenced multiple technology fields.",
+        "Vikram Lall played a significant role in promoting and nurturing key tech startups across India.",
+        "Rakesh Kapoor contributed to the transformation of business operations through innovative IT solutions.",
+        "Govindarajan Ramaswamy developed technology solutions that have empowered rural communities in India.",
+        "Dr. Manmohan Singh, before his tenure as Prime Minister, contributed to economic policies that spurred tech growth.",
+        "Sundar Pichai, an Indian-born visionary, has led Google to innovate and grow its product ecosystem.",
+        "Sanjay Mehrotra co-founded SanDisk, revolutionizing flash memory technology worldwide.",
+        "Vinod Dham, known as the 'Father of the Pentium chip', played a pivotal role in the evolution of personal computing.",
+        "Shiv Nadar founded HCL Technologies, which emerged as one of India's leading global IT services companies.",
+        "Kris Gopalakrishnan co-founded Infosys and helped shape India's reputation in the global IT industry.",
+        "Narayana Murthy’s vision and ethical leadership have set benchmarks for Indian technology entrepreneurs.",
+        "Padmasree Warrior broke glass ceilings in semiconductor technology and leadership, inspiring future generations.",
+        "Arvind Krishna, now CEO of IBM, has driven innovation in cloud computing and artificial intelligence.",
+        "Saurabh Mittal has led initiatives that improved digital payment systems, influencing India's shift toward cashless transactions.",
+        "Deepinder Goyal, founder of Zomato, revolutionized food industry logistics and digital ordering in India.",
+        "Byju Raveendran pioneered digital education platforms, expanding learning opportunities for millions of Indians.",
+        "Vijay Shekhar Sharma, the founder of Paytm, played a key role in popularizing mobile payments and the digital economy.",
+        "Bhavish Aggarwal co-founded Ola and transformed urban mobility through technology-driven transportation solutions.",
+        "Kunal Bahl, co-founder of Snapdeal, helped redefine the e-commerce landscape for Indian consumers.",
+        "Ritesh Agarwal founded OYO Rooms, using technology to standardize and disrupt the hospitality sector.",
+        "Falguni Nayar created Nykaa, leveraging digital platforms to empower and redefine beauty retail in India.",
+        "Suhas Gopinath became one of the youngest entrepreneurs by launching a tech company at an early age.",
+        "Raghav Bahl pioneered digital journalism, setting new standards for online media in India.",
+        "Kiran Mazumdar-Shaw built Biocon into one of Asia's leading biotech firms through innovation and research.",
+        "Vineet Nayar reinvented management practices at HCL Technologies, emphasizing empowerment and customer-centricity.",
+        "Dr. Kiran Kumar’s contributions in robotics and AI research have advanced technology in India’s industrial sectors.",
+        "Manoj Bhargava created innovative and cost-effective solutions to address global energy challenges from an Indian perspective.",
+        "S. Somasegar has held key leadership roles bridging Indian talent with global technology giants.",
+        "Sam Pitroda was instrumental in telecom reforms that laid the groundwork for India’s digital revolution.",
+        "Vinod Khosla, co-founder of Sun Microsystems, has been a major influence on technology investments with Indian roots.",
+        "S. D. Shibulal leveraged his expertise at Wipro to drive innovation and enhance corporate governance in tech.",
+        "Subhash Khot’s introduction of the Unique Games Conjecture has influenced theoretical computer science globally.",
+        "K. Radhakrishnan, an ISRO veteran, contributed significantly to the success of India's space missions.",
+        "Raj Reddy, a pioneer in artificial intelligence, has influenced robotics research and education worldwide.",
+        "Munish Chandra Purani developed digital solutions for environmental monitoring, impacting India’s sustainability efforts.",
+        "Dr. M.R. Narasimhan advanced computational fluid dynamics research, contributing to innovations in engineering.",
+        "K. Ananth Krishnan was recognized for developing cost-effective digital solutions in India's agricultural sector.",
+        "M. Gopalakrishnan has mentored numerous startups by sharing his expansive knowledge in computing innovations.",
+        "S.R. Sankaran significantly advanced semiconductor research, contributing to India's growing electronics industry.",
+        "Dr. Rangan Banerjee’s work in quantum computing is paving the way for next-generation tech research in India.",
+        "Vijay Kelkar helped reshape digital finance by contributing to the development of secure online banking systems.",
+        "Arunachalam Muruganantham invented low-cost medical devices, using engineering to solve rural health challenges.",
+        "Sangeeta Bhatia’s breakthroughs in micro/nano technology have revolutionized healthcare diagnostics.",
+        "Dr. Rohini Godbole contributed to particle physics, representing India at major international scientific forums.",
+        "S.G. Sampath developed critical software systems that bolstered the efficiency of India's banking infrastructure.",
+        "Anil Ambani’s ventures in telecom and media spurred digital transformations across multiple Indian enterprises.",
+        "Dr. Pavan Varshneya's research in computational neuroscience has broadened the understanding of AI applications.",
+        "Arun Netravali, a pioneer in digital video technology, has influenced standards that benefit both India and the world.",
+        "Dr. Rajendra Pachauri integrated technology with environmental activism to improve data collection in India.",
+        "Giriraj Kaushik led innovations in mobile app development, enhancing user experience in Indian tech products.",
+        "Dr. S.R. Kale designed scalable IT architectures that have powered many of India's high-growth tech companies.",
+        "Dr. Suresh Reddy’s pioneering research in cybersecurity has fortified India's digital infrastructures.",
+        "Deepak Parekh fostered digital banking innovations that helped modernize financial services in India.",
+        "Dr. Ramesh Raskar’s work in computational imaging is setting new directions for medical diagnostics in India.",
+        "S. Raghu developed affordable technology solutions that made digital education more accessible across India.",
+        "Dr. Kapil Gupta’s advances in digital healthcare have driven the expansion of telemedicine initiatives.",
+        "Sunil Bharti Mittal transformed Airtel into a tech-driven communications giant connecting millions.",
+        "Dr. Rajesh Gopinathan steered major Indian corporations toward digital innovation and strategic transformation.",
+        "Dr. Venkatesh Narayanamurthy’s contributions in information systems and big data analytics have modernized business practices.",
+        "G. Srinivasan played a foundational role in establishing India’s software export industry.",
+        "Dr. S. Prakash empowered Indian startups by sharing insights on artificial intelligence and machine learning trends.",
+        "Dr. Himanshu Bhatnagar developed innovative agricultural technologies that enhanced productivity on a national scale.",
+        "Dr. Sandeep Singh advanced nanotechnology research, contributing to breakthroughs in advanced material sciences.",
+        "Ashok Gupta was an early adopter of computer technology, helping modernize key industries during the digital revolution.",
+        "Dr. Surajit Chatterjee’s developments in wireless communications have significantly improved India’s connectivity.",
+        "Bharat Desai, as co-founder of Syntel, pioneered outsourcing and global delivery models from India.",
+        "Dr. Inderjit Singh led initiatives in microelectronics, driving semiconductor research in Indian laboratories.",
+        "Dr. Pankaj Kumar has explored the role of AI in sustainable technology development, impacting eco-friendly innovations.",
+        "Dr. V.R. Raghavan is renowned for his research in optical communications and photonics, bolstering India's tech edge.",
+        "Uday Kumar was a key figure in developing mobile solutions tailored for the dynamic Indian consumer market.",
+        "Dr. Santosh Patil’s work in embedded systems has propelled advancements in automotive technologies across India.",
+        "Manoj Bhatt created scalable IT infrastructure solutions that modernized educational institutions in India.",
+        "Dr. Ashok Shenoy advanced cloud computing innovations, influencing India's digital transformation policies.",
+        "Sudhir Joshi launched multiple startups, demonstrating entrepreneurial spirit in India's digital technology arena.",
+        "Dr. Lalit Gupta specialized in robotics and automation, significantly enhancing manufacturing processes in India.",
+        "Ravi Gupta pioneered IT solutions that improved operational efficiencies across Indian industries.",
+        "Dr. U.N. Verma contributed breakthrough research in information theory that spurred academic and practical innovations.",
+        "Anand Kumar integrated technology into his renowned Super 30 program, revolutionizing education in India.",
+        "Dr. Jai Prakash developed robust software systems for critical government projects across India.",
+        "Pramod Kumar implemented early digital marketing strategies that laid the groundwork for India's e-commerce boom.",
+        "Dr. Ashok Kumar’s work in signal processing created the foundation for modern communication systems in India.",
+        "Hemant Patel earned recognition for advancing data analytics and business intelligence in Indian startups.",
+        "Dr. Vijay Kumar pushed the frontiers of drone technology and robotics, driving automated systems research.",
+        "Suresh Iyer played an influential role in pioneering integrated circuit technologies in early Indian tech industries.",
+        "Dr. Mukund Agarwal developed innovative software solutions that have improved healthcare outcomes in India.",
+        "Dr. Raman Gupta propelled renewable energy research, creating sustainable tech applications for rural India.",
+        "Dr. R.K. Sharma’s work in computational bioinformatics opened vast new avenues for biotech innovation in India.",
+        "S. Venkatesan’s contributions in precision engineering have been vital in advancing India's high-tech manufacturing.",
+        "Dr. Manish Joshi integrated innovative digital payment solutions, transforming financial platforms across India.",
+        "Dr. Aniruddha Malpani led research into machine learning algorithms tailored to solve challenges in the Indian market.",
+        "Dr. Sandip Tripathi drove innovations in Internet-of-Things applications to power smart city initiatives in India.",
+        "Dr. Umesh Mishra’s work in composite materials has led to breakthroughs in product design and engineering innovations.",
+        "Dr. R.K. Verma significantly advanced biometric security technologies, strengthening digital defenses in India.",
+        "Rudra Prasad introduced early computer networking concepts that laid the groundwork for India’s IT infrastructure.",
+        "Dr. Ajay Mehra pioneered optical fiber communication technologies, enhancing connectivity across India.",
+        "Dr. Kumar P. Sant advised major industries on digital transformation strategies, shaping the future of Indian IT.",
+        "Dr. S.K. Singh’s work in high-performance computing propelled academic and industrial research throughout India.",
+        "R.K. Verma’s legacy in signal processing continues to inspire a generation of telecommunications engineers in India.",
+        "Dr. Apurva Arora developed early e-governance platforms that streamlined administrative processes nationwide.",
+        "Dr. Uday Singh’s groundbreaking work in cybersecurity has helped build resilient digital infrastructures.",
+        "Dr. P.K. Reddy paved the way for innovative software development methodologies in India’s IT firms.",
+        "Dr. Anil Joshi innovated cost-effective semiconductor fabrication processes that propelled the electronics industry.",
+        "Dr. Rajeev Kumar’s algorithm development research has significantly advanced data science projects in India.",
+        "Sanoj Singh co-founded tech startups that transformed digital service delivery for Indian consumers.",
+        "Dr. Anoop Menon is renowned for his advances in artificial intelligence within Indian healthcare technology.",
+        "Shrinivas Kulkarni advanced statistical methods for large data set analysis in Indian scientific research.",
+        "Dr. Balaji Srinivasan influenced blockchain and digital currency innovations with a distinct Indian perspective.",
+        "Dr. Kunal Verma’s work in computational modeling has set the stage for advanced engineering projects across India.",
+        "Dr. Aditya Balasubramanian pioneered next-generation wireless communication technologies in India.",
+        "Dr. Vijay Menon’s breakthroughs in nanotechnology have led to the development of smart materials for tech applications.",
+        "Dr. Pradeep Sharma’s research in computer vision has advanced biometric and surveillance systems in India.",
+        "Girish Wagh emerged as a prominent tech leader, driving digital transformation within India's corporate sectors.",
+        "Dr. Abhishek Lodhak has been a pioneer in implementing cost-effective rural internet infrastructure projects.",
+        "Dr. Sumit Roy’s innovations in communication protocols have significantly enhanced digital network reliability.",
+        "Dr. Amitabh Bose developed real-time data processing algorithms that have optimized operations in Indian tech firms.",
+        "Dr. Manjunath Patil’s research in distributed systems has fueled cloud computing advancements in India.",
+        "Dr. Neeraj Sharma is recognized for advancing cybersecurity frameworks in Indian research institutions.",
+        "Dr. Shailendra Rao’s pioneering work in electronic design automation reshaped India's semiconductor industry.",
+        "Dr. Prakash Iyer revolutionized fintech with secure, scalable digital transaction technologies across India.",
+        "Dr. R.S. Menon’s contributions in signal processing and integrated circuits laid foundations for the electronics sector.",
+        "Dr. Sandeep Gupta propelled IoT and smart home innovations designed specifically for Indian consumers.",
+        "Dr. Mukesh Kumar has been instrumental in developing machine learning models to solve complex challenges in India.",
+        "Dr. Jitendra Singh’s research in data mining has significantly influenced digital marketing strategies among Indian companies.",
+        "Dr. Pradeep Sengupta advanced neural network research that continues to drive AI applications in India.",
+        "Dr. Sanjay Kapoor’s contributions in big data and cloud computing have bolstered emerging technologies in India.",
+        "Dr. Ashwin Varghese’s work in wireless sensor networks has driven connectivity solutions for smart cities in India.",
+        "Dr. Shyam Sundar’s innovations in digital logistics have modernized supply chain management across the country.",
+        "Dr. Milan Jha’s research in applied mathematics and computational algorithms has influenced tech research nationwide.",
+        "Dr. Harish Bhatnagar pioneered medical technology innovations that transformed healthcare diagnostics with IT solutions.",
+        "Dr. Anurag Rathore developed secure digital communication protocols vital for enhancing IT security in India.",
+        "Dr. Vijay Khanna led initiatives to create affordable tech solutions for educational institutions across India.",
+        "Dr. Prashant Reddy’s work in cloud analytics paved the way for scalable digital infrastructure in Indian businesses.",
+        "Dr. Rakesh Sinha is celebrated as a mentor and visionary in pioneering artificial intelligence in Indian tech.",
+        "Dr. S.M. Kapoor’s research in geoinformatics has advanced satellite-based mapping and navigation capabilities.",
+        "Dr. Rajiv Chopra played an influential role in the evolution of digital learning platforms in Indian education.",
+        "Dr. Mukul Sharma’s groundbreaking work in virtual and augmented reality is setting new paradigms in Indian tech.",
+        "Dr. Praveen Kumar pioneered robust cybersecurity protocols that help secure India’s expanding digital economy.",
+        "Dr. Abhay Mehta’s innovations in software engineering have greatly enhanced the scalability of IT solutions in India.",
+        "Dr. Ashok Narayan transformed tech education by integrating hands-on computer science projects into India’s curricula.",
+        "Dr. Mahesh Kulkarni’s pioneering research in quantum computing is poised to redefine technological paradigms in India.",
+        "Dr. Suresh Verma has consistently championed digital innovation, inspiring a new generation of Indian tech entrepreneurs.",
+      ];
+
+      function displayRandomFact() {
+        const randomIndex = Math.floor(Math.random() * facts.length);
+        const randomFact = facts[randomIndex];
+        document.getElementById("fact-container").innerHTML = randomFact;
+      }
+
+      function hideLoadingScreen() {
+        const loadingScreen = document.getElementById("loading-screen");
+        loadingScreen.style.display = "none";
+      }
+
+      function getVideo() {
+        const inputValue = document.getElementById("url");
+
+        if (inputValue.value == "") {
+          inputValue.focus();
+          return 0;
+        }
+
+        const prefix = window.location.href + "video/";
+        const URL = prefix + inputValue.value;
+        loadVideo(URL, "videoContainer");
+        inputValue.value = "";
+      }
+
+      function getAudio() {
+        const inputValue = document.getElementById("url");
+
+        if (inputValue.value == "") {
+          inputValue.focus();
+          return 0;
+        }
+
+        const prefix = window.location.href + "audio/";
+        const URL = prefix + inputValue.value;
+
+        console.log;
+
+        loadAudio(URL, "videoContainer");
+
+        inputValue.value = "";
+      }
+
+      function aboutUs() {
+        const demand = "about";
+        const currentURL = window.location.href;
+        const URL = currentURL + demand;
+        window.location.href = URL;
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          // const user = document.getElementById("nameInput").value;
+          // fetch(`/userLoggedOut/${user}`);
+          //console.log("User has left the tab.");
+        } else if (document.visibilityState === "visible") {
+          location.reload();
+        }
+      });
+
+      function loadVideo(url, containerId) {
+        // Get the container div by its ID
+        const videoContainer = document.getElementById(containerId);
+
+        // Make the container visible
+        videoContainer.style.display = "flex"; // Show the container
+        videoContainer.style.flexDirection = "column"; // Stack elements vertically
+        videoContainer.style.alignItems = "center"; // Center content horizontally
+        videoContainer.style.gap = "20px"; // Add space between elements
+
+        // Clear the container before adding new content
+        videoContainer.innerHTML = "";
+
+        // Create a new <div> element to wrap the video and download button
+        const videoDiv = document.createElement("div");
+
+        // Create the <video> element dynamically
+        const videoElement = document.createElement("video");
+        videoElement.controls = true; // Enable play/pause controls
+        videoElement.src = url; // Set the video source dynamically
+        videoElement.controlsList = "nodownload";
+        videoElement.style.width = "90%"; // Video element takes 80% width of parent container
+        videoElement.style.height = "auto"; // Adjust height automatically to maintain aspect ratio
+        videoElement.style.borderRadius = "10px"; // Rounded corners for aesthetics
+
+        videoElement.addEventListener("error", () => {
+          videoContainer.innerHTML =
+            "<p style='color: red;'> Video failed to load. Please enter valid URL.</p>";
+          return; // Exit the function immediately
+        });
+        // Disable context menu to prevent interactions like right-click or long press
+        videoElement.addEventListener("contextmenu", (event) => {
+          event.preventDefault(); // Block the default context menu
+        });
+
+        // Append the <video> element to the <div>
+        videoDiv.appendChild(videoElement);
+
+        // Create a download button
+        const downloadButton = document.createElement("button");
+        downloadButton.textContent = "Download Video"; // Initial button text
+
+        // Set the button's styles
+        downloadButton.style.fontSize = "12px";
+        downloadButton.style.backgroundColor = "black";
+        downloadButton.style.padding = "10px 20px";
+        downloadButton.style.filter = "none";
+        downloadButton.style.borderRadius = "10px";
+        downloadButton.style.fontFamily = "'Nunito Sans', sans-serif";
+        downloadButton.style.border = "none";
+        downloadButton.style.color = "whitesmoke";
+        downloadButton.style.webkitTapHighlightColor = "transparent";
+        downloadButton.style.cursor = "pointer";
+        downloadButton.style.display = "flex";
+        downloadButton.style.alignItems = "center";
+        downloadButton.style.width = "90%";
+        downloadButton.style.hight = "30px";
+        downloadButton.style.justifyContent = "center";
+        downloadButton.style.gap = "5px"; // Space between text and image
+        downloadButton.style.whiteSpace = "nowrap";
+
+        // Add an image/icon to the button
+        const buttonImage = document.createElement("img");
+        buttonImage.src = "static/images/download.svg"; // Replace with your image URL
+        buttonImage.alt = "Download Icon";
+
+        // Set the image styles
+        buttonImage.style.width = "20px";
+        buttonImage.style.height = "20px";
+        buttonImage.style.pointerEvents = "none"; // Prevents interaction
+        buttonImage.style.userSelect = "none"; // Prevents text selection or dragging
+
+        // Add the image to the button
+        downloadButton.prepend(buttonImage);
+
+        // Set the download functionality with delay and message
+        downloadButton.addEventListener("click", () => {
+          // Change the button text to indicate waiting
+          downloadButton.textContent = "We don't show you ads";
+
+          // Wait for 3 seconds
+          setTimeout(() => {
+            // Reset the button text and re-add the image
+            downloadButton.textContent = "Download Video";
+            downloadButton.prepend(buttonImage); // Add the image back
+
+            // Create a link element for the download
+            const link = document.createElement("a");
+            link.href = url; // Set the URL for the video file
+            link.download = "video-file.mp4"; // Suggest a file name for download
+            link.click(); // Programmatically trigger the download
+          }, 3000); // Delay of 3 seconds
+        });
+
+        // Append the download button to the <div>
+        videoDiv.appendChild(downloadButton);
+
+        // Append the <div> to the container
+        videoContainer.appendChild(videoDiv);
+
+        window.scroll(0, 500);
+      }
+
+      function loadAudio(url, containerId) {
+        // Get the container div by its ID
+        const audioContainer = document.getElementById(containerId);
+
+        // Make the container visible
+        audioContainer.style.display = "flex"; // Show the container
+        audioContainer.style.flexDirection = "column"; // Stack elements vertically
+        audioContainer.style.alignItems = "center"; // Center content horizontally
+        audioContainer.style.gap = "20px"; // Add space between elements
+
+        // Clear the container before adding new content
+        audioContainer.innerHTML = "";
+
+        // Create the <audio> element dynamically
+        const audioElement = document.createElement("audio");
+        audioElement.controls = true; // Enable audio play/pause controls
+        audioElement.src = url; // Set the audio source dynamically
+        audioElement.style.width = "90%"; // Audio element takes 80% width of parent container
+        audioElement.style.height = "40px"; // Set height for better visibility of controls
+        audioElement.controlsList = "nodownload";
+
+        audioElement.addEventListener("error", () => {
+          audioContainer.innerHTML =
+            "<p style='color: red;'> Audio failed to load. Please enter a valid URL.</p>";
+          return; // Exit the function immediately
+        });
+
+        // Append the <audio> element to the <div>
+        audioContainer.appendChild(audioElement);
+
+        // Create a download button
+        const downloadButton = document.createElement("button");
+        downloadButton.textContent = "Download Audio"; // Initial button text
+
+        // Set the button's styles
+        downloadButton.style.fontSize = "12px";
+        downloadButton.style.backgroundColor = "black";
+        downloadButton.style.padding = "10px 20px";
+        downloadButton.style.filter = "none";
+        downloadButton.style.borderRadius = "10px";
+        downloadButton.style.fontFamily = "'Nunito Sans', sans-serif";
+        downloadButton.style.border = "none";
+        downloadButton.style.color = "whitesmoke";
+        downloadButton.style.webkitTapHighlightColor = "transparent";
+        downloadButton.style.cursor = "pointer";
+        downloadButton.style.display = "flex";
+        downloadButton.style.width = "90%";
+        downloadButton.style.hight = "30px";
+        downloadButton.style.alignItems = "center";
+        downloadButton.style.justifyContent = "center";
+        downloadButton.style.gap = "5px"; // Space between text and image
+        downloadButton.style.whiteSpace = "nowrap";
+
+        // Add an image/icon to the button
+        const buttonImage = document.createElement("img");
+        buttonImage.src = "static/images/download.svg"; // Replace with your image URL
+        buttonImage.alt = "Download Icon";
+
+        // Set the image styles
+        buttonImage.style.width = "20px";
+        buttonImage.style.height = "20px";
+        buttonImage.style.pointerEvents = "none"; // Prevents interaction
+        buttonImage.style.userSelect = "none"; // Prevents text selection or dragging
+
+        // Add the image to the button
+        downloadButton.prepend(buttonImage);
+
+        // Set the download functionality with delay and message
+        downloadButton.addEventListener("click", () => {
+          // Change the button text to indicate waiting
+          downloadButton.textContent = "We don't show you ads ";
+
+          // Wait for 3 seconds
+          setTimeout(() => {
+            // Reset the button text and re-add the image
+            downloadButton.textContent = "Download Audio";
+            downloadButton.prepend(buttonImage); // Add the image back
+
+            // Create a link element for the download
+            const link = document.createElement("a");
+            link.href = url; // Set the URL for the audio file
+            link.download = "audio-file.mp3"; // Suggest a file name for download
+            link.click(); // Programmatically trigger the download
+          }, 3000); // Delay of 3 seconds
+        });
+
+        // Append the download button to the <div>
+        // audioDiv.appendChild(downloadButton);
+
+        // Append the <div> to the container
+        audioContainer.appendChild(downloadButton);
+
+        window.scroll(0, 500);
+      }
+
+      function dropSettings() {
+        // Toggle the visibility of the dropdown
+        const dropdown = document.getElementById("dropdownContent");
+
+        if (
+          dropdown.style.display === "none" ||
+          dropdown.style.display === ""
+        ) {
+          dropdown.style.display = "flex";
+        } else {
+          dropdown.style.display = "none";
+        }
+      }
+
+      function generateVirtueName() {
+        const virtues = [
+          "Valor",
+          "Justice",
+          "Haven",
+          "True",
+          "Patience",
+          "Peace",
+          "Joy",
+          "Wisdom",
+          "Harmony",
+          "Honor",
+        ];
+        const selectedName =
+          virtues[Math.floor(Math.random() * virtues.length)];
+
+        const localName = localStorage.getItem("userName");
+
+        if (!localName) {
+          return selectedName;
+        }
+
+        return localName;
+      }
+
+      function resetname() {
+        if (document.getElementById("nameInput").value == "") {
+          document.getElementById("nameInput").value = generateVirtueName();
+        }
+      }
+
+      function logWhoIsWho(first, second) {
+        fetch(`/whoIsWho/${first}/${second}`);
+      }
+
+      function logOut() {
+        const logoutButton = document.getElementById("logOut");
+        const user = document.getElementById("nameInput").value;
+        logoutButton.textContent = "Logging you out";
+        fetch(`/userLoggedOut/${user}`);
+
+        setTimeout(() => {
+          window.close();
+        }, 3000);
+      }
+
+      window.addEventListener("load", () => {
+        // Check if the page is being loaded for the first time in this session
+        if (!sessionStorage.getItem("hasLoaded")) {
+          const user = document.getElementById("nameInput").value;
+          localStorage.setItem("userName", user);
+          fetch(`/users/${user}`);
+
+          // console.log("This is the initial page load!");
+          sessionStorage.setItem("hasLoaded", "true"); // Mark as loaded
+        } else {
+          // console.log("This is an intermediate load (e.g., reload) and will be ignored.");
+        }
+      });
+
+      function staticRun() {
+        document.getElementById("nameInput").value = generateVirtueName();
+        displayRandomFact();
+        // Simulate a delay to show the loading screen
+        // log();
+        setTimeout(hideLoadingScreen, 3000);
+      }
+
+      function log() {
+        const user = document.getElementById("nameInput").value;
+        const btn = document.getElementById("saveBtn");
+
+        const storedName = localStorage.getItem("userName");
+
+        if (storedName === null || storedName === "") {
+          localStorage.setItem("userName", user);
+          // fetch(`/userlogged/${user}`);
+          // alert(localStorage.getItem('userName'))
+          return;
+        }
+
+        const first = localStorage.getItem("userName");
+        localStorage.setItem("userName", user);
+
+        fetch(`/whoIsWho/${first}/${user}`);
+
+        // alert(localStorage.getItem('userName'))
+
+        btn.textContent = "saving";
+
+        setTimeout(() => {
+          btn.textContent = "save";
+        }, 2000);
+
+        fetch(`/userLoggedOut/${first}`).then(() => {
+          fetch(`/users/${user}`);
+        });
+      }
+
+      staticRun();
+    </script>
+  </body>
+</html>
